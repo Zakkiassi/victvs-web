@@ -1,16 +1,30 @@
 import Dropdown from "../../components/Dropdown/Dropdown";
 import AllData from "../../components/AllData/AllData";
-import NameSearchBar from "../../components/NameSearchBar/NameSearchBar";
 import axios from "axios";
+import NameSearchBar from "../../components/NameSearchBar/NameSearchBar";
 import { useState, useEffect } from "react";
 
 const Home = () => {
+  const [initialData, setInitialData] = useState([]);
   const [data, setData] = useState([]);
   const [selectedOption, setSelectedOption] = useState(undefined);
+
+  const onSearch = (searchTerm) => {
+    setData(
+      data.filter((item) =>
+        item.CandidateName.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  };
+  const resetSearch = () => {
+    setData(initialData);
+  };
+
   const filteredData =
     selectedOption && selectedOption !== "all"
       ? data.filter((item) => item.LocationName === selectedOption)
       : data;
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/data", {
@@ -25,6 +39,7 @@ const Home = () => {
       })
       .then((response) => {
         console.log(response);
+        setInitialData(response.data);
         setData(response.data);
       })
       .catch((error) => {
@@ -34,7 +49,7 @@ const Home = () => {
   return (
     <div className="w-full">
       <div className="flex max-w-full justify-end gap-10 items-end p-6">
-        <NameSearchBar />
+        <NameSearchBar onSearch={onSearch} resetSearch={resetSearch} />
         <Dropdown
           data={data}
           setSelectedOption={setSelectedOption}

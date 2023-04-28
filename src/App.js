@@ -1,12 +1,14 @@
 import CandidatePage from "./pages/CandidatePage/CandidatePage";
 import Home from "./pages/Home/Home";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <Router>
       <nav className="flex justify-center w-full shadow">
-        <span className="text-primary font-black text-3xl">VICTVS</span>
+        <Link to="/">
+          <span className="text-primary font-black text-3xl">VICTVS</span>
+        </Link>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
