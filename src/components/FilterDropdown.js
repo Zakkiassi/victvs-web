@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Dropdown = ({ data, selectedOption, setSelectedOption }) => {
   const cities = data.map((item) => item.LocationName);

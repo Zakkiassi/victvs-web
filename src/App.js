@@ -1,5 +1,5 @@
-import CandidatePage from "./pages/CandidatePage/CandidatePage";
-import Home from "./pages/Home/Home";
+import Candidate from "./pages/Candidate";
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:CandidateName" element={<CandidatePage />} />
+        <Route path="/:title" element={<Candidate />} />
       </Routes>
     </Router>
   );

@@ -1,7 +1,7 @@
-import Dropdown from "../../components/Dropdown/Dropdown";
-import AllData from "../../components/AllData/AllData";
+import FilterDropdown from "../components/FilterDropdown";
+import Candidates from "../components/Candidates";
 import axios from "axios";
-import NameSearchBar from "../../components/NameSearchBar/NameSearchBar";
+import SearchBar from "../components/SearchBar";
 import { useState, useEffect } from "react";
 
 const Home = () => {
@@ -16,6 +16,7 @@ const Home = () => {
       )
     );
   };
+
   const resetSearch = () => {
     setData(initialData);
   };
@@ -27,18 +28,12 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/data", {
-        params: {
-          // fromDate: '2022-01-01',
-          // candidate: 'John Doe',
-          // location: 'New York'
-        },
+      .get("http://localhost:5000/candidates", {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        console.log(response);
         setInitialData(response.data);
         setData(response.data);
       })
@@ -46,18 +41,19 @@ const Home = () => {
         console.error(error);
       });
   }, []);
+
   return (
-    <div className="w-full">
-      <div className="flex max-w-full justify-end gap-10 items-end p-6">
-        <NameSearchBar onSearch={onSearch} resetSearch={resetSearch} />
-        <Dropdown
+    <div className="min-w-[1300px] flex flex-col">
+      <div className="flex px-48 md:flex-row flex-col md:justify-between items-center p-6">
+        <SearchBar onSearch={onSearch} resetSearch={resetSearch} />
+        <FilterDropdown
           data={data}
           setSelectedOption={setSelectedOption}
           selectedOption={selectedOption}
         />
       </div>
-      <div className="max-w-[2000px] flex justify-center">
-        <AllData data={filteredData} />
+      <div className="w-full flex justify-center">
+        <Candidates data={filteredData} />
       </div>
     </div>
   );
